@@ -1,0 +1,22 @@
+{
+  "name": "music-visualization-kit",
+  "version": "0.0.0",
+  "description": "Web music visualization animation kits.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "release": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wings-j/music-visualization-kit.git"
+  },
+  "author": "WingsJ",
+  "license": "MIT",
+  "homepage": "https://github.com/wings-j/music-visualization-kit#readme",
+  "dependencies": {
+    "typescript": "^5.8.3"
+  }
+}
