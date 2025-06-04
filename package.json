@@ -16,7 +16,7 @@
   "author": "WingsJ",
   "license": "MIT",
   "homepage": "https://github.com/wings-j/music-visualization-kit#readme",
-  "dependencies": {
+  "devDependencies": {
     "typescript": "^5.8.3"
   }
 }

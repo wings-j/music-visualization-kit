@@ -11,9 +11,16 @@ class Transformer {
   source: MediaElementAudioSourceNode; // Node First
   analyser: AnalyserNode; // Node Last
 
+  get totalTime() {
+    return this.element.duration;
+  }
+  get currentTime() {
+    return this.element.currentTime;
+  }
+
   /**
    * Constructor
-   * @param [element] Element
+   * @param [element] Element or Selector
    * @param [size] Size of Audio Buffer. Half of FFT Size
    * @param [nodes] Additional Audio Nodes to connect
    */
@@ -34,6 +41,8 @@ class Transformer {
     } else {
       this.element = element;
     }
+    this.element.addEventListener('play', this.handleAudioPlay);
+    this.element.addEventListener('pause', this.handleAudioPause);
 
     this.context = new AudioContext();
     this.source = this.context.createMediaElementSource(this.element);
@@ -48,6 +57,32 @@ class Transformer {
     current.connect(this.analyser);
   }
 
+  /**
+   * Handle Audio Play
+   */
+  private handleAudioPlay = () => {
+    if (this.context.state === 'suspended') {
+      this.context.resume();
+    }
+  };
+  /**
+   * Handle Audio Pause
+   */
+  private handleAudioPause = () => {
+    if (this.context.state === 'running') {
+      this.context.suspend();
+    }
+  };
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.source.disconnect();
+    this.context.close();
+
+    this.element.removeEventListener('play', this.handleAudioPlay);
+    this.element.removeEventListener('pause', this.handleAudioPause);
+  }
   /**
    * Get
    * @description Normalized Data.

@@ -4,11 +4,11 @@
 class Animator {
   private callback: (time: number) => void;
   private duration: number;
-  private currentTime = 0;
-  private accumulateTime = 0;
   private lastTime = 0;
+  private frameTime = 0;
   private timer: number = 0;
   state: State = State.stop;
+  accumulateTime = 0;
 
   /**
    * Constructor
@@ -28,13 +28,13 @@ class Animator {
       this.timer = window.requestAnimationFrame(time => {
         if (this.lastTime !== 0) {
           let delta = time - this.lastTime;
-          this.currentTime += delta;
           this.accumulateTime += delta;
+          this.frameTime += delta;
 
-          if (this.accumulateTime >= this.duration) {
-            this.accumulateTime %= this.duration;
+          if (this.frameTime >= this.duration) {
+            this.frameTime %= this.duration;
 
-            this.callback(this.currentTime);
+            this.callback(delta);
           }
         }
 
@@ -65,8 +65,8 @@ class Animator {
     this.state = State.stop;
     window.cancelAnimationFrame(this.timer);
 
-    this.currentTime = 0;
     this.accumulateTime = 0;
+    this.frameTime = 0;
     this.lastTime = 0;
   }
 }
