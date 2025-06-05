@@ -2,6 +2,7 @@
  * Painter
  */
 class Painter {
+  private trace?: number;
   private offscreenCanvas: OffscreenCanvas;
   private offscreenContext: OffscreenCanvasRenderingContext2D;
   element: HTMLCanvasElement;
@@ -18,8 +19,11 @@ class Painter {
    * @param [element] Element or Selector
    * @param [width] Width of Canvas
    * @param [height] Height of Canvas
+   * @param [trace] Trace
    */
-  constructor(element: HTMLCanvasElement | string, { width, height }: { width?: number; height?: number } = {}) {
+  constructor(element: HTMLCanvasElement | string, { width, height, trace }: { width?: number; height?: number; trace?: number } = {}) {
+    this.trace = trace;
+
     if (typeof element === 'string') {
       let el = window.document.querySelector<HTMLCanvasElement>(element);
       if (!el) {
@@ -46,6 +50,12 @@ class Painter {
    */
   update(draw: (brush: OffscreenCanvasRenderingContext2D) => void) {
     this.offscreenContext.clearRect(...this.wrap);
+
+    if (this.trace) {
+      this.offscreenContext.globalAlpha = this.trace;
+      this.offscreenContext.drawImage(this.element, ...this.wrap);
+      this.offscreenContext.globalAlpha = 1;
+    }
 
     draw(this.offscreenContext);
 

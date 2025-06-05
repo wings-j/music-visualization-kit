@@ -24,7 +24,7 @@ class Transformer {
    * @param [size] Size of Audio Buffer. Half of FFT Size
    * @param [nodes] Additional Audio Nodes to connect
    */
-  constructor(element: HTMLAudioElement | string, { size = 512, nodes = [] }: { size?: number; nodes?: AudioNode[] } = {}) {
+  constructor(element: HTMLAudioElement | string, { size = 256, nodes = [] }: { size?: number; nodes?: AudioNode[] } = {}) {
     if (Math.log2(size) !== Math.floor(Math.log2(size)) || size < 1) {
       throw new Error(`Invalid Size: ${size}. Must be a power of 2 greater than 0.`);
     }
