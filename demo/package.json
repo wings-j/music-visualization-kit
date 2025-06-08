@@ -1,5 +1,5 @@
 {
-  "name": "music-visualization-demos",
+  "name": "demo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "music-visualization-kit": "music-visualization-kit"
+    "music-visualization-kit": "file:../library"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",

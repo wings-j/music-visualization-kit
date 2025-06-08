@@ -17,16 +17,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Build Library
+        run: |
+          cd ./library
+          npm install
+          npm run build
 
-      - name: Build with Vite
-        run: npm run build
+      - name: Build Demo
+        run: |
+          cd ../demo
+          npm install
+          npm run build
 
       - name: Deploy to Document Branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./demo/dist
           publish_branch: document
           force_orphan: true
