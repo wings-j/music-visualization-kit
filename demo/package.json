@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "music-visualization-kit": "file:../kit"
+    "music-visualization-kit": "music-visualization-kit"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
