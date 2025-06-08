@@ -18,14 +18,14 @@ jobs:
           node-version: '20'
 
       - name: Build Library
+        working-directory: library
         run: |
-          cd ./library
           npm install
           npm run build
 
       - name: Build Demo
+        working-directory: demo
         run: |
-          cd ../demo
           npm install
           npm run build
 
