@@ -49,14 +49,12 @@ Transform audio to frequency or time domain data.
 #### Constructor
 
 ```ts
-/**
- * Constructor
- * @param [element] Element or Selector
- * @param [size] Size of Audio Buffer. Half of FFT Size
- * @param [nodes] Additional Audio Nodes to connect
- */
 constructor(element: HTMLAudioElement | string, { size = 256, nodes = [] }: { size?: number; nodes?: AudioNode[] } = {})
 ```
+
+- @param [element] Element or Selector
+- @param [size] Size of Audio Buffer. Half of FFT Size
+- @param [nodes] Additional Audio Nodes to connect
 
 #### Methods
 
@@ -65,9 +63,6 @@ constructor(element: HTMLAudioElement | string, { size = 256, nodes = [] }: { si
 Dispose the audio context.
 
 ```ts
-/**
- * Dispose
- */
 dispose(): void
 ```
 
@@ -76,14 +71,12 @@ dispose(): void
 Get normalized data.
 
 ```ts
-/**
- * Get
- * @description Normalized Data.
- * @param [time] Time Domain. The default is frequency domain.
- * @return Data
- */
 get(time = false): number[]
 ```
+
+- @description Normalized Data.
+- @param [time] Time Domain. The default is frequency domain.
+- @return Data
 
 ### Painter
 
@@ -92,13 +85,11 @@ Render canvas.
 #### Constructor
 
 ```ts
-/**
- * Constructor
- * @param [element] Element or Selector
- * @param [trace] Trace of the Last Frame
- */
 constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } = {})
 ```
+
+- @param [element] Element or Selector
+- @param [trace] Trace of the Last Frame
 
 ### Animator
 
@@ -107,13 +98,11 @@ Animation trigger by `requestAnimationFrame`.
 #### Constructor
 
 ```ts
-/**
- * Constructor
- * @param [callback] Callback
- * @param [rate] Frame Rate
- */
 constructor(callback: (time: number) => void, { rate = 60 }: { rate?: number } = {})
 ```
+
+- @param [callback] Callback
+- @param [rate] Frame Rate
 
 #### Properties
 
@@ -140,9 +129,6 @@ accumulated: number
 Play.
 
 ```ts
-/**
- * Play
- */
 play();
 ```
 
@@ -151,9 +137,6 @@ play();
 Pause.
 
 ```ts
-/**
- * Pause
- */
 pause();
 ```
 
@@ -162,8 +145,5 @@ pause();
 Stop.
 
 ```ts
-/**
- * Stop
- */
 stop();
 ```

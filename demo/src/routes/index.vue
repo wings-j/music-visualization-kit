@@ -5,7 +5,8 @@
       route: 'basic',
       code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/_basic.vue',
       music: 'Broke For Free - Night Owl',
-      source: 'https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl/'
+      sourceName: 'Free Music Archive',
+      sourceUrl: 'https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl/'
     }
   ];
 </script>
@@ -17,26 +18,25 @@
       <router-link
         v-for="a of categories"
         class="category"
-        style="
-          padding: 16px;
-          border: 1px solid #dddddd;
-          color: #333333;
-          text-decoration: none;
-          border-radius: 8px;
-          background-color: white;
-          cursor: default;
-          transition: box-shadow 0.3s;
-        "
+        style="padding: 16px; border: 1px solid #dddddd; text-decoration: none; border-radius: 8px; background-color: white; cursor: default; transition: box-shadow 0.3s"
         :to="{ name: a.route }"
       >
         <div>{{ a.name }}</div>
-        <div style="display: flex; margin-top: 8px; font-size: 14px">
-          <a style="color: #333333; text-decoration: none" :href="a.code" target="_blank" @click.stop>
+        <div style="display: flex; margin-top: 8px; color: #333333; font-size: 14px">
+          <a style="text-decoration: none" :href="a.code" target="_blank" @click.stop>
             <img style="width: 14px; height: 14px" src="../assets/github.svg" />
           </a>
-          <a style="margin-left: auto; color: #333333; text-decoration: none" :href="a.source" target="_blank" @click.stop>
-            <span>Music Source:</span>
-            <span style="margin-left: 10px">{{ a.music }}</span>
+          <span style="margin-left: auto; color: #888888">Music: </span>
+          <span style="margin-left: 10px">{{ a.music }}</span>
+          <a
+            v-if="a.sourceName && a.sourceUrl"
+            style="margin-left: 20px; border-bottom: 1px solid #999999; color: inherit; text-decoration: none"
+            :href="a.sourceUrl"
+            target="_blank"
+            @click.stop
+          >
+            <span>Source:</span>
+            <span style="margin-left: 10px">{{ a.sourceName }}</span>
           </a>
         </div>
       </router-link>
