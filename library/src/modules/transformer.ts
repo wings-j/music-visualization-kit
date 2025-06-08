@@ -6,17 +6,10 @@ const max = 256; // 2**8
 class Transformer {
   private size: number;
   private nodes: AudioNode[]; // Nodes in Between
-  element: HTMLAudioElement;
-  context: AudioContext;
-  source: MediaElementAudioSourceNode; // Node First
-  analyser: AnalyserNode; // Node Last
-
-  get totalTime() {
-    return this.element.duration;
-  }
-  get currentTime() {
-    return this.element.currentTime;
-  }
+  private element: HTMLAudioElement;
+  private context: AudioContext;
+  private source: MediaElementAudioSourceNode; // Node First
+  private analyser: AnalyserNode; // Node Last
 
   /**
    * Constructor
@@ -76,7 +69,7 @@ class Transformer {
   /**
    * Dispose
    */
-  dispose() {
+  dispose(): void {
     this.source.disconnect();
     this.context.close();
 
@@ -89,7 +82,7 @@ class Transformer {
    * @param [time] Time Domain
    * @return Data
    */
-  get(time = false) {
+  get(time = false): number[] {
     let buffer = new Uint8Array(this.analyser.fftSize);
     if (time) {
       this.analyser.getByteTimeDomainData(buffer);

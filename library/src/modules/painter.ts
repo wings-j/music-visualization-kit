@@ -3,22 +3,20 @@
  */
 class Painter {
   private trace?: number;
+  private element: HTMLCanvasElement;
+  private context: CanvasRenderingContext2D;
   private offscreenCanvas: OffscreenCanvas;
   private offscreenContext: OffscreenCanvasRenderingContext2D;
-  element: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
   width: number;
   height: number;
 
-  get wrap(): [number, number, number, number] {
+  private get wrap(): [number, number, number, number] {
     return [0, 0, this.width, this.height];
   }
 
   /**
    * Constructor
    * @param [element] Element or Selector
-   * @param [width] Width of Canvas
-   * @param [height] Height of Canvas
    * @param [trace] Trace
    */
   constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } = {}) {

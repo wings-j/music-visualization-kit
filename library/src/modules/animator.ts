@@ -7,7 +7,7 @@ class Animator {
   private lastTime = 0;
   private frameTime = 0;
   private timer: number = 0;
-  state: State = State.stop;
+  state: 'stop' | 'play' | 'pause' = 'stop';
   accumulateTime = 0;
 
   /**
@@ -24,7 +24,7 @@ class Animator {
    * Run
    */
   private run() {
-    if (this.state === State.play) {
+    if (this.state === 'play') {
       this.timer = window.requestAnimationFrame(time => {
         if (this.lastTime !== 0) {
           let delta = time - this.lastTime;
@@ -48,36 +48,27 @@ class Animator {
    * Play
    */
   play() {
-    this.state = State.play;
+    this.state = 'play';
     this.run();
   }
   /**
    * Pause
    */
   pause() {
-    this.state = State.pause;
+    this.state = 'pause';
     window.cancelAnimationFrame(this.timer);
   }
   /**
    * Stop
    */
   stop() {
-    this.state = State.stop;
+    this.state = 'stop';
     window.cancelAnimationFrame(this.timer);
 
     this.accumulateTime = 0;
     this.frameTime = 0;
     this.lastTime = 0;
   }
-}
-
-/**
- * State
- */
-enum State {
-  stop,
-  play,
-  pause
 }
 
 export { Animator };
