@@ -5,7 +5,10 @@ import './style.css';
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [{ path: '/basic', component: () => import('./routes/_basic.vue') }]
+  routes: [
+    { path: '/', component: () => import('./routes/index.vue') },
+    { name: 'basic', path: '/basic', component: () => import('./routes/pages/_basic.vue') }
+  ]
 });
 
 createApp(App).use(router).mount('#app');

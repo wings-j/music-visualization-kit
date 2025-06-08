@@ -21,7 +21,7 @@ class Painter {
    * @param [height] Height of Canvas
    * @param [trace] Trace
    */
-  constructor(element: HTMLCanvasElement | string, { width, height, trace }: { width?: number; height?: number; trace?: number } = {}) {
+  constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } = {}) {
     this.trace = trace;
 
     if (typeof element === 'string') {
@@ -35,8 +35,8 @@ class Painter {
     }
     this.context = this.element.getContext('2d')!;
 
-    this.width = width ?? this.element.clientWidth;
-    this.height = height ?? this.element.clientHeight;
+    this.width = Number.parseInt(this.element.getAttribute('width') ?? '') || this.element.clientWidth;
+    this.height = Number.parseInt(this.element.getAttribute('height') ?? '') || this.element.clientHeight;
     this.element.width = this.width;
     this.element.height = this.height;
 
