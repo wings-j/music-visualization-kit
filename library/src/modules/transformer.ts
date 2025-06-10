@@ -10,6 +10,7 @@ class Transformer {
   private context: AudioContext;
   private source: MediaElementAudioSourceNode; // Node First
   private analyser: AnalyserNode; // Node Last
+  private buffer: Uint8Array;
 
   /**
    * Constructor
@@ -24,6 +25,7 @@ class Transformer {
 
     this.size = size;
     this.nodes = nodes;
+    this.buffer = new Uint8Array(this.size * 2);
 
     if (typeof element === 'string') {
       let el = window.document.querySelector<HTMLAudioElement>(element);
@@ -83,14 +85,13 @@ class Transformer {
    * @return Data
    */
   get(time = false): number[] {
-    let buffer = new Uint8Array(this.analyser.fftSize);
     if (time) {
-      this.analyser.getByteTimeDomainData(buffer);
+      this.analyser.getByteTimeDomainData(this.buffer);
     } else {
-      this.analyser.getByteFrequencyData(buffer);
+      this.analyser.getByteFrequencyData(this.buffer);
     }
-    let array = Array.from(buffer)
-      .slice(0, Math.floor(buffer.length / 2))
+    let array = Array.from(this.buffer)
+      .slice(0, Math.floor(this.buffer.length / 2))
       .map(a => a / max);
 
     return array;
