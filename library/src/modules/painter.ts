@@ -25,7 +25,7 @@ class Painter {
     if (typeof element === 'string') {
       let el = window.document.querySelector<HTMLCanvasElement>(element);
       if (!el) {
-        throw new Error(`Audio Element not Found: ${element}.`);
+        throw new Error(`Canvas Element not Found: ${element}.`);
       }
       this.element = el;
     } else {
@@ -46,7 +46,7 @@ class Painter {
    * Update
    * @param [draw] Drawing Function
    */
-  update(draw: (brush: OffscreenCanvasRenderingContext2D) => void) {
+  update(draw: (context: OffscreenCanvasRenderingContext2D) => void) {
     this.offscreenContext.clearRect(...this.wrap);
 
     if (this.trace) {

@@ -7,6 +7,12 @@
       music: 'Broke For Free - Night Owl',
       sourceName: 'Free Music Archive',
       sourceUrl: 'https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl/'
+    },
+    {
+      name: 'Line Tides',
+      route: 'line-tides',
+      code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/line-tides.vue',
+      music: '当山瞳 - Cathy'
     }
   ];
 </script>
@@ -18,7 +24,16 @@
       <router-link
         v-for="a of categories"
         class="category"
-        style="padding: 16px; border: 1px solid #dddddd; text-decoration: none; border-radius: 8px; background-color: white; cursor: default; transition: box-shadow 0.3s"
+        style="
+          padding: 16px;
+          border: 1px solid #dddddd;
+          color: black;
+          text-decoration: none;
+          border-radius: 8px;
+          background-color: white;
+          cursor: default;
+          transition: box-shadow 0.3s;
+        "
         :to="{ name: a.route }"
       >
         <div>{{ a.name }}</div>

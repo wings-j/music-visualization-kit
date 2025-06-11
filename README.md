@@ -18,8 +18,8 @@ Basic example:
 import { Animator, Painter, Transformer } from 'music-visualization-kit';
 import { interpolateColor } from '../utils/interpolate-color';
 
-let transformer: Transformer = new Transformer($audio);
-let painter: Painter = new Painter($canvas);
+let transformer: Transformer = new Transformer($audio); // $audio is HTMLAudioElement
+let painter: Painter = new Painter($canvas); // $canvas is HTMLCanvasElement
 let animator = new Animator(() => {
   let data = transformer.get();
   painter.update(brush => {
@@ -38,6 +38,7 @@ let animator = new Animator(() => {
 });
 
 animator.play();
+$audio.play();
 ```
 
 ## API
@@ -90,6 +91,8 @@ constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } =
 
 - @param [element] Element or Selector
 - @param [trace] Trace of the Last Frame
+
+// TODO update
 
 ### Animator
 

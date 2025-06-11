@@ -7,7 +7,8 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', component: () => import('./routes/index.vue') },
-    { name: 'basic', path: '/basic', component: () => import('./routes/pages/_basic.vue') }
+    { name: 'basic', path: '/basic', component: () => import('./routes/pages/_basic.vue') },
+    { name: 'line-tides', path: '/line-tides', component: () => import('./routes/pages/line-tides.vue') }
   ]
 });
 
