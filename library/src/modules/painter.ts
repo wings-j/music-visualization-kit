@@ -46,7 +46,7 @@ class Painter {
    * Update
    * @param [draw] Drawing Function
    */
-  update(draw: (brush: OffscreenCanvasRenderingContext2D) => void) {
+  update(draw: (context: OffscreenCanvasRenderingContext2D) => void) {
     this.offscreenContext.clearRect(...this.wrap);
 
     if (this.trace) {

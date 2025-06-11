@@ -92,6 +92,8 @@ constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } =
 - @param [element] Element or Selector
 - @param [trace] Trace of the Last Frame
 
+// TODO update
+
 ### Animator
 
 Animation trigger by `requestAnimationFrame`.

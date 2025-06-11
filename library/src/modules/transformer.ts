@@ -56,17 +56,13 @@ class Transformer {
    * Handle Audio Play
    */
   private handleAudioPlay = () => {
-    if (this.context.state === 'suspended') {
-      this.context.resume();
-    }
+    this.context.resume();
   };
   /**
    * Handle Audio Pause
    */
   private handleAudioPause = () => {
-    if (this.context.state === 'running') {
-      this.context.suspend();
-    }
+    this.context.suspend();
   };
   /**
    * Dispose
