@@ -22,7 +22,7 @@
   <audio
     ref="$audio"
     style="position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%)"
-    src="https://wings-j.github.io/music-visualization-resource/Cathy.ogg"
+    src="./music-visualization-resource/Cathy.ogg"
     controls
     volume="0.5"
     preload="auto"
