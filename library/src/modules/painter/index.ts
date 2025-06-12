@@ -43,6 +43,9 @@ class Painter {
 
     this.offscreenCanvas = new OffscreenCanvas(this.width, this.height);
     this.offscreenContext = this.offscreenCanvas.getContext('2d')!;
+    this.offscreenContext.scale(1, -1);
+    this.offscreenContext.translate(0, -this.height);
+
     this.brush = new Brush(this.canvas, this.offscreenContext);
   }
 
@@ -59,7 +62,9 @@ class Painter {
       this.offscreenContext.globalAlpha = 1;
     }
 
+    this.offscreenContext.save();
     draw(this.brush);
+    this.offscreenContext.restore();
 
     this.context.clearRect(...this.wrap);
     this.context.drawImage(this.offscreenCanvas, ...this.wrap);

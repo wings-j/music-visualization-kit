@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Animator, Painter, Transformer } from 'music-visualization-kit';
+  import { Animator, Painter, Point, Transformer } from 'music-visualization-kit';
   import { onMounted, ref } from 'vue';
 
   const $audio = ref<HTMLAudioElement>();
@@ -12,7 +12,17 @@
 
     let animator = new Animator(() => {
       let data = transformer.get();
-      painter.update(context => {});
+      painter.update(brush => {
+        let length = data.length;
+        let deltaWidth = Math.ceil(painter.width / length);
+
+        let points: Point[] = [];
+        for (let i = 0; i < length; i++) {
+          points.push(new Point(deltaWidth * i, painter.height * data[i]));
+        }
+
+        brush.drawCurve(points);
+      });
     });
 
     animator.play();

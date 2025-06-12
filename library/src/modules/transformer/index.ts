@@ -65,22 +65,12 @@ class Transformer {
     this.context.suspend();
   };
   /**
-   * Dispose
-   */
-  dispose(): void {
-    this.source.disconnect();
-    this.context.close();
-
-    this.audio.removeEventListener('play', this.handleAudioPlay);
-    this.audio.removeEventListener('pause', this.handleAudioPause);
-  }
-  /**
    * Get
    * @description Normalized Data.
    * @param [time] Time Domain
    * @return Data
    */
-  get(time = false): number[] {
+  get(time = false) {
     if (time) {
       this.analyser.getByteTimeDomainData(this.buffer);
     } else {
@@ -91,6 +81,16 @@ class Transformer {
       .map(a => a / max);
 
     return array;
+  }
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.source.disconnect();
+    this.context.close();
+
+    this.audio.removeEventListener('play', this.handleAudioPlay);
+    this.audio.removeEventListener('pause', this.handleAudioPause);
   }
 }
 
