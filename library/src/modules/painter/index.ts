@@ -1,14 +1,17 @@
+import { Brush } from './parts/brush';
+
 /**
  * Painter
  */
 class Painter {
-  private trace?: number;
-  private element: HTMLCanvasElement;
-  private context: CanvasRenderingContext2D;
-  private offscreenCanvas: OffscreenCanvas;
-  private offscreenContext: OffscreenCanvasRenderingContext2D;
-  width: number;
-  height: number;
+  private readonly trace?: number;
+  private readonly canvas: HTMLCanvasElement;
+  private readonly context: CanvasRenderingContext2D;
+  private readonly offscreenCanvas: OffscreenCanvas;
+  private readonly offscreenContext: OffscreenCanvasRenderingContext2D;
+  readonly width: number;
+  readonly height: number;
+  readonly brush: Brush;
 
   private get wrap(): [number, number, number, number] {
     return [0, 0, this.width, this.height];
@@ -27,35 +30,36 @@ class Painter {
       if (!el) {
         throw new Error(`Canvas Element not Found: ${element}.`);
       }
-      this.element = el;
+      this.canvas = el;
     } else {
-      this.element = element;
+      this.canvas = element;
     }
-    this.context = this.element.getContext('2d')!;
+    this.context = this.canvas.getContext('2d')!;
 
-    this.width = Number.parseInt(this.element.getAttribute('width') ?? '') || this.element.clientWidth;
-    this.height = Number.parseInt(this.element.getAttribute('height') ?? '') || this.element.clientHeight;
-    this.element.width = this.width;
-    this.element.height = this.height;
+    this.width = Number.parseInt(this.canvas.getAttribute('width') ?? '') || this.canvas.clientWidth;
+    this.height = Number.parseInt(this.canvas.getAttribute('height') ?? '') || this.canvas.clientHeight;
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
 
     this.offscreenCanvas = new OffscreenCanvas(this.width, this.height);
     this.offscreenContext = this.offscreenCanvas.getContext('2d')!;
+    this.brush = new Brush(this.canvas, this.offscreenContext);
   }
 
   /**
    * Update
    * @param [draw] Drawing Function
    */
-  update(draw: (context: OffscreenCanvasRenderingContext2D) => void) {
+  update(draw: (brush: Brush) => void) {
     this.offscreenContext.clearRect(...this.wrap);
 
     if (this.trace) {
       this.offscreenContext.globalAlpha = this.trace;
-      this.offscreenContext.drawImage(this.element, ...this.wrap);
+      this.offscreenContext.drawImage(this.canvas, ...this.wrap);
       this.offscreenContext.globalAlpha = 1;
     }
 
-    draw(this.offscreenContext);
+    draw(this.brush);
 
     this.context.clearRect(...this.wrap);
     this.context.drawImage(this.offscreenCanvas, ...this.wrap);

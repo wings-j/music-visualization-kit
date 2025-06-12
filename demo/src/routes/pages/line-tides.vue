@@ -8,6 +8,8 @@
   onMounted(() => {
     let transformer: Transformer = new Transformer($audio.value!);
     let painter: Painter = new Painter($canvas.value!);
+    let radius = Math.min(painter.width, painter.height) * 0.5;
+
     let animator = new Animator(() => {
       let data = transformer.get();
       painter.update(context => {});

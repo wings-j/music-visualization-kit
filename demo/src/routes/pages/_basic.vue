@@ -11,7 +11,7 @@
     let painter: Painter = new Painter($canvas.value!);
     let animator = new Animator(() => {
       let data = transformer.get();
-      painter.update(context => {
+      painter.update(brush => {
         let length = data.length;
         let width = Math.ceil(painter.width / length);
         for (let i = 0; i < length; i++) {
@@ -20,8 +20,8 @@
           let w = width - 1;
           let h = -Math.floor(data[i] * painter.height);
 
-          context.fillStyle = interpolateColor(data[i]);
-          context.fillRect(x, y, w, h);
+          brush.context.fillStyle = interpolateColor(data[i]);
+          brush.context.fillRect(x, y, w, h);
         }
       });
     });

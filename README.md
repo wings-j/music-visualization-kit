@@ -22,7 +22,7 @@ let transformer: Transformer = new Transformer($audio); // $audio is HTMLAudioEl
 let painter: Painter = new Painter($canvas); // $canvas is HTMLCanvasElement
 let animator = new Animator(() => {
   let data = transformer.get();
-  painter.update(brush => {
+  painter.update(context => {
     let length = data.length;
     let width = Math.ceil(painter.width / length);
     for (let i = 0; i < length; i++) {
@@ -31,8 +31,8 @@ let animator = new Animator(() => {
       let w = width - 1;
       let h = -Math.floor(data[i] * painter.height);
 
-      brush.fillStyle = interpolateColor(data[i]);
-      brush.fillRect(x, y, w, h);
+      context.fillStyle = interpolateColor(data[i]);
+      context.fillRect(x, y, w, h);
     }
   });
 });

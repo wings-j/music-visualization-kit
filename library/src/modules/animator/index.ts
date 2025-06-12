@@ -2,8 +2,8 @@
  * Animator
  */
 class Animator {
-  private callback: (time: number) => void;
-  private duration: number;
+  private readonly callback: (time: number) => void;
+  private readonly duration: number;
   private lastTime = 0;
   private frameTime = 0;
   private timer: number = 0;
