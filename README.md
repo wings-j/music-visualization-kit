@@ -4,6 +4,8 @@ Web music visualization animation kits.
 
 TypeScript and JavaScript(ESNext) library.
 
+Demos: [https://wings-j.github.io/music-visualization-kit](https://wings-j.github.io/music-visualization-kit).
+
 ## Installation
 
 ```sh
@@ -56,6 +58,16 @@ constructor(element: HTMLAudioElement | string, { size = 256, nodes = [] }: { si
 - @param [element] Element or Selector
 - @param [size] Size of Audio Buffer. Half of FFT Size
 - @param [nodes] Additional Audio Nodes to connect
+
+#### Properties
+
+##### size
+
+Data length and FFT half size.
+
+```ts
+size: number;
+```
 
 #### Methods
 

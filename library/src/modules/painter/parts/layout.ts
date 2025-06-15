@@ -25,6 +25,26 @@ class Layout {
 
     return temp;
   }
+  /**
+   * Circular
+   * @param [data] Data
+   * @param [radius] Radius
+   * @param [amplitude] Amplitude
+   */
+  static circular(data: number[], radius: number, amplitude: number) {
+    let temp: Point[] = [];
+
+    let deltaAngle = (2 * Math.PI) / data.length;
+    for (let i = 0; i < data.length; i++) {
+      let angle = i * deltaAngle;
+      let x = (radius + (data[i] - 0.5) * amplitude) * Math.cos(angle);
+      let y = (radius + (data[i] - 0.5) * amplitude) * Math.sin(angle);
+
+      temp.push(new Point(x, y));
+    }
+
+    return temp;
+  }
 }
 
 export { Layout };

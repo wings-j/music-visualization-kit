@@ -4,13 +4,13 @@ const max = 256; // 2**8
  * Transformer
  */
 class Transformer {
-  private readonly size: number;
   private readonly nodes: AudioNode[]; // Nodes in Between
   private readonly audio: HTMLAudioElement;
   private readonly context: AudioContext;
   private readonly source: MediaElementAudioSourceNode; // Node First
   private readonly analyser: AnalyserNode; // Node Last
   private readonly buffer: Uint8Array;
+  readonly size: number;
 
   /**
    * Constructor

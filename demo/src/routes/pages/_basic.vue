@@ -11,9 +11,9 @@
     let painter: Painter = new Painter($canvas.value!);
     let animator = new Animator(() => {
       let data = transformer.get();
-      painter.update(brush => {
-        let points = Layout.linear(data, painter.width, painter.height);
+      let points = Layout.linear(data, painter.width, painter.height);
 
+      painter.update(brush => {
         let deltaWidth = Math.ceil(painter.width / data.length);
         for (let i = 0; i < data.length; i++) {
           let { x, y } = points[i];
@@ -24,7 +24,12 @@
       });
     });
 
-    animator.play();
+    $audio.value!.addEventListener('play', () => {
+      animator.play();
+    });
+    $audio.value!.addEventListener('pause', () => {
+      animator.pause();
+    });
   });
 </script>
 
