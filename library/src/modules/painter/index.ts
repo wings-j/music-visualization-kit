@@ -52,17 +52,34 @@ class Painter {
 
     this.offscreenCanvas = new OffscreenCanvas(this.width, this.height);
     this.offscreenContext = this.offscreenCanvas.getContext('2d')!;
-
-    if (center) {
-      this.offscreenContext.translate(this.width / 2, this.height / 2);
-    } else {
-      this.offscreenContext.scale(1, -1);
-      this.offscreenContext.translate(0, -this.height);
-    }
+    this.setTransform();
 
     this.brush = new Brush(this.canvas, this.offscreenContext);
   }
 
+  /**
+   * Set Transform
+   */
+  private setTransform() {
+    this.offscreenContext.scale(1, -1);
+    if (this.center) {
+      this.offscreenContext.translate(this.width / 2, -this.height / 2);
+    } else {
+      this.offscreenContext.translate(0, -this.height);
+    }
+  }
+  /**
+   * Clear Transform
+   */
+  private clearTransform() {
+    // this.offscreenContext.setTransform(1, 0, 0, 1, 0, 0);
+    if (this.center) {
+      this.offscreenContext.translate(-this.width / 2, this.height / 2);
+    } else {
+      this.offscreenContext.translate(0, this.height);
+    }
+    this.offscreenContext.scale(1, -1);
+  }
   /**
    * Update
    * @param [draw] Drawing Function
@@ -70,9 +87,11 @@ class Painter {
   update(draw: (brush: Brush) => void) {
     this.offscreenContext.clearRect(...this.offscreenWrap);
 
-    if (this.trace) {
+    if (this.trace && this.trace < 1) {
+      this.clearTransform();
       this.offscreenContext.globalAlpha = this.trace;
-      this.offscreenContext.drawImage(this.canvas, ...this.offscreenWrap);
+      this.offscreenContext.drawImage(this.canvas, ...this.wrap); // Because the transform is restored, so the `wrap` should be used instead of `offscreenWrap`.
+      this.setTransform();
       this.offscreenContext.globalAlpha = 1;
     }
 

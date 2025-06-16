@@ -4,9 +4,9 @@
   let hidden = false;
 
   onMounted(() => {
-    const audio = document.querySelector('audio');
-
     window.addEventListener('keypress', ev => {
+      const audio = document.querySelector('audio');
+
       if (audio) {
         if (ev.code === 'Space') {
           hidden = !hidden;

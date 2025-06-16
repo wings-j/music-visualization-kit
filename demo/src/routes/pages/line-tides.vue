@@ -6,7 +6,8 @@
   import { onMounted, ref } from 'vue';
 
   const $audio = ref<HTMLAudioElement>();
-  const $canvas = ref<HTMLCanvasElement>();
+  const $canvas1 = ref<HTMLCanvasElement>();
+  const $canvas2 = ref<HTMLCanvasElement>();
   const colors = {
     center: Color('#FA5848'),
     innerRing: Color('#FA5740'),
@@ -15,25 +16,34 @@
 
   onMounted(() => {
     let transformer: Transformer = new Transformer($audio.value!);
-    let painter: Painter = new Painter($canvas.value!, { center: true, trace: 0.98 });
+    let painter1: Painter = new Painter($canvas1.value!, { center: true, trace: 0.95 });
+    let painter2: Painter = new Painter($canvas2.value!, { center: true, trace: 0.98 });
 
-    let centerSize = Math.max(painter.width, painter.height) * 0.5;
+    let centerSize = Math.max(painter2.width, painter2.height) * 0.5;
     let centerRipples: {
       radius: 0;
     }[] = [];
-    let ringRadius = Math.min(painter.width, painter.height) * 0.3;
+    let ringRadius = Math.min(painter2.width, painter2.height) * 0.3;
     let ringTrace = new Array<number>(64).fill(0);
 
     let animator = new Animator(() => {
-      let data = transformer.get().slice(64, 128);
-      let average = mean(data);
+      let frequencyData = transformer.get().slice(64, 128);
+      let average = mean(frequencyData);
       let bass = transformer.get().slice(0, 8);
       let bassAverage = mean(bass);
 
-      painter.update(brush => {
+      painter1.update(brush => {});
+      painter2.update(brush => {
         var gradient = brush.context.createRadialGradient(0, 0, 0, 0, 0, centerSize * average);
         gradient.addColorStop(0, colors.center.hex());
-        gradient.addColorStop(0.1, colors.center.alpha(0.5).hex());
+        gradient.addColorStop(
+          0.1,
+          colors.center
+            .alpha(0.5)
+            .rotate(average * -30)
+            .rgb()
+            .toString()
+        );
         gradient.addColorStop(0.2, 'transparent');
         gradient.addColorStop(1, 'transparent');
         brush.context.fillStyle = gradient;
@@ -52,18 +62,18 @@
 
           brush.context.beginPath();
           brush.context.arc(0, 0, a.radius, 0, Math.PI * 2, true);
-          brush.context.strokeStyle = colors.center.alpha(0.07).rgb().toString();
+          brush.context.strokeStyle = colors.center.alpha(0.055).rgb().toString();
           brush.context.stroke();
         }
 
-        for (let i = 0; i < data.length; i++) {
-          ringTrace[i] = Math.max(data[i], ringTrace[i] - 0.005);
+        for (let i = 0; i < frequencyData.length; i++) {
+          ringTrace[i] = Math.max(frequencyData[i], ringTrace[i] - 0.005);
         }
         brush.context.strokeStyle = colors.outerRing.rotate(average * -30).hex();
         brush.drawCurve(Layout.circular(ringTrace, ringRadius, ringRadius), { closed: true });
 
         brush.context.strokeStyle = colors.innerRing.rotate(average * -45).hex();
-        brush.drawCurve(Layout.circular(data, ringRadius, ringRadius * 1.4), { closed: true });
+        brush.drawCurve(Layout.circular(frequencyData, ringRadius, ringRadius * 1.4), { closed: true });
       });
     });
 
@@ -77,7 +87,8 @@
 </script>
 
 <template>
-  <canvas ref="$canvas" style="width: 100vw; height: 100vh; background-color: black"></canvas>
+  <canvas ref="$canvas1" style="position: fixed; left: 0; right: 0; width: 100vw; height: 100vh; background-color: black"></canvas>
+  <canvas ref="$canvas2" style="position: fixed; left: 0; right: 0; width: 100vw; height: 100vh"></canvas>
   <audio
     ref="$audio"
     style="position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%)"
