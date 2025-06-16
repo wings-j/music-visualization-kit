@@ -1,6 +1,6 @@
 {
   "name": "music-visualization-kit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Web music visualization animation kits.",
   "type": "module",
   "main": "dist/index.js",
