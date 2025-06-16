@@ -6,13 +6,13 @@ import { Point } from './types/point';
 class Painter {
   private readonly trace?: number;
   private readonly center: boolean;
+  private readonly brush: Brush;
   readonly canvas: HTMLCanvasElement;
   readonly context: CanvasRenderingContext2D;
   readonly offscreenCanvas: OffscreenCanvas;
   readonly offscreenContext: OffscreenCanvasRenderingContext2D;
   readonly width: number;
   readonly height: number;
-  readonly brush: Brush;
 
   private get wrap(): [number, number, number, number] {
     return [0, 0, this.width, this.height];
@@ -72,7 +72,6 @@ class Painter {
    * Clear Transform
    */
   private clearTransform() {
-    // this.offscreenContext.setTransform(1, 0, 0, 1, 0, 0);
     if (this.center) {
       this.offscreenContext.translate(-this.width / 2, this.height / 2);
     } else {

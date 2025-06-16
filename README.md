@@ -1,18 +1,16 @@
-# music-visualization-kit
-
 Web music visualization animation kits.
 
 TypeScript and JavaScript(ESNext) library.
 
 Demos: [https://wings-j.github.io/music-visualization-kit](https://wings-j.github.io/music-visualization-kit).
 
-## Installation
+# Installation
 
 ```sh
 npm install music-visualization-kit
 ```
 
-## Usage
+# Usage
 
 Basic example:
 
@@ -43,25 +41,25 @@ animator.play();
 $audio.play();
 ```
 
-## API
+# API
 
-### Transformer
+## Transformer
 
 Transform audio to frequency or time domain data.
 
-#### Constructor
+### Constructor
 
 ```ts
-constructor(element: HTMLAudioElement | string, { size = 256, nodes = [] }: { size?: number; nodes?: AudioNode[] } = {})
+constructor(element: HTMLAudioElement | string, options: { size?: number; nodes?: AudioNode[] } = {})
 ```
 
 - @param [element] Element or Selector
-- @param [size] Size of Audio Buffer. Half of FFT Size
+- @param [size] Size of Audio Buffer. Half of FFT Size. Default is 256
 - @param [nodes] Additional Audio Nodes to connect
 
-#### Properties
+### Properties
 
-##### size
+#### size
 
 Data length and FFT half size.
 
@@ -69,19 +67,11 @@ Data length and FFT half size.
 size: number;
 ```
 
-#### Methods
+### Methods
 
-##### get
+#### get
 
 Get normalized data.
-
-##### dispose
-
-Dispose the audio context.
-
-```ts
-dispose(): void
-```
 
 ```ts
 get(time = false): number[]
@@ -91,38 +81,106 @@ get(time = false): number[]
 - @param [time] Time Domain. The default is frequency domain.
 - @return Data
 
-### Painter
+#### dispose
+
+Dispose the audio context.
+
+```ts
+dispose(): void
+```
+
+## Painter
 
 Render canvas.
 
-#### Constructor
+### Constructor
 
 ```ts
-constructor(element: HTMLCanvasElement | string, { trace }: { trace?: number } = {})
+constructor(element: HTMLCanvasElement | string, options: { center?: boolean, trace?: number } = {})
 ```
 
 - @param [element] Element or Selector
+- @param [center] Translate Origin to the Center of the Screen
 - @param [trace] Trace of the Last Frame
 
-// TODO brush
-// TODO update
+### Properties
 
-### Animator
+#### canvas
+
+Canvas element.
+
+```ts
+canvas: HTMLCanvasElement;
+```
+
+#### context
+
+Canvas context.
+
+```ts
+context: CanvasRenderingContext2D;
+```
+
+#### offscreenCanvas
+
+Canvas element.
+
+```ts
+offscreenCanvas: OffscreenCanvas;
+```
+
+#### offscreenContext
+
+Canvas context.
+
+```ts
+offscreenContext: OffscreenCanvasRenderingContext2D;
+```
+
+#### width
+
+Canvas width.
+
+```ts
+width: number;
+```
+
+#### height
+
+Canvas height.
+
+```ts
+height: number;
+```
+
+### Methods
+
+#### update
+
+Update trigger.
+
+```ts
+update(draw: (brush: Brush) => void)
+```
+
+- @param [draw] Drawing Function
+
+## Animator
 
 Animation trigger by `requestAnimationFrame`.
 
-#### Constructor
+### Constructor
 
 ```ts
-constructor(callback: (time: number) => void, { rate = 60 }: { rate?: number } = {})
+constructor(callback: (time: number) => void, options: { rate?: number } = {})
 ```
 
 - @param [callback] Callback
-- @param [rate] Frame Rate
+- @param [rate] Frame Rate. Default is 60
 
-#### Properties
+### Properties
 
-##### state
+#### state
 
 Playing state.
 
@@ -130,7 +188,7 @@ Playing state.
 state: 'stop' | 'play' | 'pause';
 ```
 
-##### accumulateTime
+#### accumulateTime
 
 Accumulated time since played.
 
@@ -138,9 +196,9 @@ Accumulated time since played.
 accumulated: number
 ```
 
-#### Methods
+### Methods
 
-##### play
+#### play
 
 Play.
 
@@ -148,7 +206,7 @@ Play.
 play();
 ```
 
-##### pause
+#### pause
 
 Pause.
 
@@ -156,10 +214,64 @@ Pause.
 pause();
 ```
 
-##### stop
+#### stop
 
 Stop.
 
 ```ts
 stop();
 ```
+
+## Data
+
+Tool class to processing data.
+
+### Methods
+
+#### jitter
+
+Add random noise to data.
+
+```ts
+static jitter(data: number[], amplitude: number) => number[]
+```
+
+- @param [data] Data
+- @param [amplitude] Amplitude
+- @return Jittered data
+
+## Layout
+
+Tool class to transform data to points.
+
+### Methods
+
+#### linear
+
+Position points by a fixed gap of x axis and the data value as the y values.
+
+```ts
+static linear(data: number[], width: number, height: number, options: { startX?: number; startY?: number } = {}): Point[]
+```
+
+- @param [data] Data
+- @param [width] Width
+- @param [height] Height
+- @param [startX] Start X
+- @param [startY] Start Y
+- @return Points
+
+#### circular
+
+Position points around a center point.
+
+```ts
+static circular(data: number[], radius: number, amplitude: number, { centerX = 0, centerY = 0 }: { centerX?: number; centerY?: number } = {}): Point[]
+```
+
+- @param [data] Data
+- @param [radius] Radius
+- @param [amplitude] Amplitude
+- @param [centerX] Center X
+- @param [centerY] Center Y
+- @return Points

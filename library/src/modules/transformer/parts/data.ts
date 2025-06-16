@@ -6,7 +6,7 @@ class Data {
    * Jitter
    * @param [data] Data
    * @param [amplitude] Amplitude
-   * @returns Jittered data
+   * @return Jittered data
    */
   static jitter(data: number[], amplitude: number) {
     return data.map(value => {
