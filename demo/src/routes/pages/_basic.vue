@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Animator, Painter, Transformer } from 'music-visualization-kit';
+  import { Animator, Layout, Painter, Transformer } from 'music-visualization-kit';
   import { onMounted, ref } from 'vue';
   import { interpolateColor } from '../../utils/interpolate-color';
 
@@ -11,22 +11,25 @@
     let painter: Painter = new Painter($canvas.value!);
     let animator = new Animator(() => {
       let data = transformer.get();
-      painter.update(context => {
-        let length = data.length;
-        let width = Math.ceil(painter.width / length);
-        for (let i = 0; i < length; i++) {
-          let x = Math.floor(i * width);
-          let y = painter.height;
-          let w = width - 1;
-          let h = -Math.floor(data[i] * painter.height);
+      let points = Layout.linear(data, painter.width, painter.height);
 
-          context.fillStyle = interpolateColor(data[i]);
-          context.fillRect(x, y, w, h);
+      painter.update(brush => {
+        let deltaWidth = Math.ceil(painter.width / data.length);
+        for (let i = 0; i < data.length; i++) {
+          let { x, y } = points[i];
+
+          brush.context.fillStyle = interpolateColor(data[i]);
+          brush.context.fillRect(x, 0, deltaWidth - 1, y);
         }
       });
     });
 
-    animator.play();
+    $audio.value!.addEventListener('play', () => {
+      animator.play();
+    });
+    $audio.value!.addEventListener('pause', () => {
+      animator.pause();
+    });
   });
 </script>
 

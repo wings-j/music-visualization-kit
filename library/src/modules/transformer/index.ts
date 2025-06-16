@@ -4,13 +4,13 @@ const max = 256; // 2**8
  * Transformer
  */
 class Transformer {
-  private size: number;
-  private nodes: AudioNode[]; // Nodes in Between
-  private element: HTMLAudioElement;
-  private context: AudioContext;
-  private source: MediaElementAudioSourceNode; // Node First
-  private analyser: AnalyserNode; // Node Last
-  private buffer: Uint8Array;
+  private readonly nodes: AudioNode[]; // Nodes in Between
+  private readonly audio: HTMLAudioElement;
+  private readonly context: AudioContext;
+  private readonly source: MediaElementAudioSourceNode; // Node First
+  private readonly analyser: AnalyserNode; // Node Last
+  private readonly buffer: Uint8Array;
+  readonly size: number;
 
   /**
    * Constructor
@@ -32,15 +32,15 @@ class Transformer {
       if (!el) {
         throw new Error(`Audio Element not Found: ${element}.`);
       }
-      this.element = el;
+      this.audio = el;
     } else {
-      this.element = element;
+      this.audio = element;
     }
-    this.element.addEventListener('play', this.handleAudioPlay);
-    this.element.addEventListener('pause', this.handleAudioPause);
+    this.audio.addEventListener('play', this.handleAudioPlay);
+    this.audio.addEventListener('pause', this.handleAudioPause);
 
     this.context = new AudioContext();
-    this.source = this.context.createMediaElementSource(this.element);
+    this.source = this.context.createMediaElementSource(this.audio);
     this.analyser = this.context.createAnalyser();
     this.analyser.fftSize = this.size * 2;
     let current = this.source as AudioNode;
@@ -65,22 +65,12 @@ class Transformer {
     this.context.suspend();
   };
   /**
-   * Dispose
-   */
-  dispose(): void {
-    this.source.disconnect();
-    this.context.close();
-
-    this.element.removeEventListener('play', this.handleAudioPlay);
-    this.element.removeEventListener('pause', this.handleAudioPause);
-  }
-  /**
    * Get
    * @description Normalized Data.
    * @param [time] Time Domain
    * @return Data
    */
-  get(time = false): number[] {
+  get(time = false) {
     if (time) {
       this.analyser.getByteTimeDomainData(this.buffer);
     } else {
@@ -91,6 +81,16 @@ class Transformer {
       .map(a => a / max);
 
     return array;
+  }
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.source.disconnect();
+    this.context.close();
+
+    this.audio.removeEventListener('play', this.handleAudioPlay);
+    this.audio.removeEventListener('pause', this.handleAudioPause);
   }
 }
 
