@@ -35,14 +35,7 @@
 
 <template>
   <canvas ref="$canvas" style="width: 100vw; height: 100vh"></canvas>
-  <audio
-    ref="$audio"
-    style="position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%)"
-    src="Broke For Free - Night Owl.ogg"
-    controls
-    volume="0.5"
-    preload="auto"
-  ></audio>
+  <audio ref="$audio" style="position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%)" src="Broke For Free.ogg" controls volume="0.5" preload="auto"></audio>
 </template>
 
 <style scoped lang="scss"></style>

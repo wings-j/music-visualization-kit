@@ -162,7 +162,7 @@ class Brush {
         }
       }
 
-      this.context.stroke();
+      // this.context.stroke();
     }
   }
 }

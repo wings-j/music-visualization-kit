@@ -240,6 +240,18 @@ static jitter(data: number[], amplitude: number) => number[]
 - @param [amplitude] Amplitude
 - @return Jittered data
 
+#### extract
+
+Extract data with specific interval.
+
+```ts
+static extract(data: number[], interval: number) => number[]
+```
+
+- @param [data] Data
+- @param [interval] Interval
+- @return Extracted data
+
 ## Layout
 
 Tool class to transform data to points.
