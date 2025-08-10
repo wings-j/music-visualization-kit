@@ -9,7 +9,7 @@ class Transformer {
   private readonly context: AudioContext;
   private readonly source: MediaElementAudioSourceNode; // Node First
   private readonly analyser: AnalyserNode; // Node Last
-  private readonly buffer: Uint8Array;
+  private readonly buffer: Uint8Array<ArrayBuffer>;
   readonly size: number;
 
   /**
