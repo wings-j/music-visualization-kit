@@ -12,7 +12,13 @@
       name: 'Line Tides',
       route: 'line-tides',
       code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/line-tides.vue',
-      music: '当山瞳 - Cathy'
+      music: 'Cathy - 当山瞳'
+    },
+    {
+      name: 'Line Waves',
+      route: 'line-waves',
+      code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/line-waves.vue',
+      music: 'This is Water - The Slowest Runner'
     }
   ];
 </script>

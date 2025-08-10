@@ -16,14 +16,13 @@
 
   onMounted(() => {
     let transformer: Transformer = new Transformer($audio.value!);
-    let painter1: Painter = new Painter($canvas1.value!, { center: true, trace: 0.95 });
-    let painter2: Painter = new Painter($canvas2.value!, { center: true, trace: 0.98 });
+    let painter: Painter = new Painter($canvas2.value!, { center: true, trace: 0.98 });
 
-    let centerSize = Math.max(painter2.width, painter2.height) * 0.5;
+    let centerSize = Math.max(painter.width, painter.height) * 0.5;
     let centerRipples: {
       radius: 0;
     }[] = [];
-    let ringRadius = Math.min(painter2.width, painter2.height) * 0.3;
+    let ringRadius = Math.min(painter.width, painter.height) * 0.3;
     let ringTrace = new Array<number>(64).fill(0);
 
     let animator = new Animator(() => {
@@ -32,8 +31,7 @@
       let bass = transformer.get().slice(0, 8);
       let bassAverage = mean(bass);
 
-      painter1.update(brush => {});
-      painter2.update(brush => {
+      painter.update(brush => {
         var gradient = brush.context.createRadialGradient(0, 0, 0, 0, 0, centerSize * average);
         gradient.addColorStop(0, colors.center.hex());
         gradient.addColorStop(
@@ -71,9 +69,11 @@
         }
         brush.context.strokeStyle = colors.outerRing.rotate(average * -30).hex();
         brush.drawCurve(Layout.circular(ringTrace, ringRadius, ringRadius), { closed: true });
+        brush.context.stroke();
 
         brush.context.strokeStyle = colors.innerRing.rotate(average * -45).hex();
         brush.drawCurve(Layout.circular(frequencyData, ringRadius, ringRadius * 1.4), { closed: true });
+        brush.context.stroke();
       });
     });
 
