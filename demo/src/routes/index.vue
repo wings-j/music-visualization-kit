@@ -19,6 +19,12 @@
       route: 'line-waves',
       code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/line-waves.vue',
       music: 'This is Water - The Slowest Runner'
+    },
+    {
+      name: 'Shaking Rectangles',
+      route: 'shaking-rectangles',
+      code: 'https://github.com/wings-j/music-visualization-kit/blob/main/demo/src/routes/pages/shaking-rectangles.vue',
+      music: '义礼 - 高梨康治'
     }
   ];
 </script>
