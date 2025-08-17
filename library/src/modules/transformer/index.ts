@@ -12,6 +12,16 @@ class Transformer {
   private readonly buffer: Uint8Array<ArrayBuffer>;
   readonly size: number;
 
+  get current() {
+    return this.audio.currentTime;
+  }
+  get duration() {
+    return this.audio.duration;
+  }
+  get progress() {
+    return this.current / this.duration;
+  }
+
   /**
    * Constructor
    * @param [element] Element or Selector
