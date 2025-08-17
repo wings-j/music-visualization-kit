@@ -161,8 +161,6 @@ class Brush {
           this.context.bezierCurveTo(p1x, p1y, p2x, p2y, points[i].x, points[i].y);
         }
       }
-
-      // this.context.stroke();
     }
   }
 }

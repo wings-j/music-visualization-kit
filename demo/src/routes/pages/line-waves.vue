@@ -66,7 +66,7 @@
   <audio
     ref="$audio"
     style="position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%)"
-    src="music-visualization-resource/This is Water.ogg"
+    src="/music-visualization-resource/This is Water.ogg"
     controls
     volume="0.5"
     preload="auto"

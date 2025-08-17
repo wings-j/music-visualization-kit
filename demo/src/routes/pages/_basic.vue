@@ -7,9 +7,9 @@
   const $canvas = ref<HTMLCanvasElement>();
 
   onMounted(() => {
-    let transformer: Transformer = new Transformer($audio.value!);
-    let painter: Painter = new Painter($canvas.value!);
-    let animator = new Animator(() => {
+    const transformer: Transformer = new Transformer($audio.value!);
+    const painter: Painter = new Painter($canvas.value!);
+    const animator = new Animator(() => {
       let data = transformer.get();
       let points = Layout.linear(data, painter.width, painter.height);
 
